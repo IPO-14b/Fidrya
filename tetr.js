@@ -2,7 +2,41 @@ var Tetris = {
   config: {
     pitchID: "tetris",
     freeBrick: "<b></b>",
-    filledBrick: "<i></i>"
+    filledBrick: "<i></i>",
+    figureTypes: {
+      I: [
+          [[-3,5]],
+          [[-2,5]],
+          [[-1,5]],
+          [[ 0,5]]
+      	],
+      J: [
+               [[-2,6]],
+               [[-1,6]],
+          [[0,5],[0,6]]
+      ],
+      L: [
+          [[-2,5]],
+          [[-1,5]],
+          [[0,5],[0,6]]
+      ],
+      O: [
+        [[-1,5],[-1,5]],
+        [[ 0,5], [0,6]]
+      ],
+      S: [
+              [[-1,6],[-1,7]],
+        [[0,5], [0,6]]
+      ],
+      T: [
+        [[-1,5],[-1,6],[-1,7]],
+               [[0,6]]
+      ],
+      Z: [
+        [[-1,4],[-1,5]],
+                [[0,5], [0,6]]
+      ]
+    }
 },
   startBtn: document.getElementById('start-btn')
   pitch: {
@@ -23,11 +57,12 @@ var Tetris = {
     }
   },
     create: function() {
-      // Для начала создадим квадрат
-    this.coords = [
-      [[-1,5],[-1,6]],
-       [[0,5], [0,6]]
-    ];
+       this.coords = this.getRandomFigure();
+  },  
+    getRandomFigure: function() {
+    var keys = Object.keys(Tetris.config.figureTypes);
+    var randKey = Math.floor(Math.random() * keys.length);
+    return Tetris.config.figureTypes[keys[randKey]];
   },
     process: function() {
     // Если фигура соприкоснулась со стенкой или кирпичиком
