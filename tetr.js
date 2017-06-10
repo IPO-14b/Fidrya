@@ -8,9 +8,11 @@ var Tetris = {
     width: 12,
     height: 20
     bricks: []
+    getDom: function() {
+      return document.getElementById(Tetris.config.pitchID);
+    }
   },
-  startBtn: document.getElementById('start-btn')
-};
+startBtn: document.getElementById('start-btn')
 init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
@@ -26,9 +28,8 @@ Tetris.startBtn.onclick = function () {
   }
 },
 draw: function() {
-// Найдем на странице элемент, в котором будем рисовать тетрис
-var tetrisDom = document.getElementById(Tetris.config.pitchID);
-
+// А вот здесь вызовем метод getDom и присвоим его вывод переменной
+var tetrisDom = Tetris.pitch.getDom();
 // Очистим на всякий случай его
 tetrisDom.innerHTML = '';
 // И пробежимся по массиву кирпичиков
