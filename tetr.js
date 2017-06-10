@@ -122,6 +122,7 @@ var Tetris = {
       Tetris.figure.coords[i][j][0]++;
     });
  },
+   rollback: false,// пока ничего не случилось, откатывать ничего не надо
    sideStep: function(direction) {
       // Менять координату нужно у каждого кирпичика в составе фигуры
       Tetris.each(this.coords, function(i,j){
@@ -131,6 +132,47 @@ var Tetris = {
           Tetris.figure.coords[i][j][1]--;
         }
       });
+     // проверяем - не нарушены ли правила
+      Tetris.each(this.coords, function(i,j){
+        var coord = Tetris.figure.coords[i][j];
+        var brick;
+        // у тех кирпичиков, которые уже появились на поле (у которых
+        // неотрицательная координата), проверяем - не уткнулись ли мы в стену
+        if (coord[0] >= 0) {
+          brick = Tetris.pitch.bricks[coord[0]][coord[1]];
+          // если клеточки не существует, значит, кирпичик «вылез» за пределы поля
+          if (brick == undefined) {
+            // устанавливаем флаг «откатить»
+            Tetris.figure.rollback = true;
+          }
+        }
+        // даже если мы не пересекли границы поля, мы могли все равно «уткнуться»,
+        // например, в кирпичик, который уже занимает клетку на поле
+        if (Tetris.pitch.bricks[coord[0]] != undefined) {
+          brick = Tetris.pitch.bricks[coord[0]][coord[1]];
+          if (brick == 1) {
+            // в таком случае также устанавливаем флаг в true
+            Tetris.figure.rollback = true;
+          }
+        }
+      });
+      // Проверяем - был ли ранее установлен флаг
+      if (this.rollback) {
+        // Если да, то меняем координаты в обратную сторону
+        Tetris.each(this.coords, function(i,j){
+          if (direction == 'right') {
+            Tetris.figure.coords[i][j][1]--;
+          } else {
+            Tetris.figure.coords[i][j][1]++;
+          }
+        });
+        // Не забываем переключить флаг обратно, чтобы не заблокировать
+        // все последующие перемещения
+        this.rollback = false;
+      } else {
+        // если же откатываться не надо, спокойно нарисуем новую позицию фигуры
+        Tetris.draw();
+      }
     },
   checkCoords: function(row, col) {
       var checked = false;
