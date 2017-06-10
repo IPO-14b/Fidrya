@@ -23,7 +23,11 @@ var Tetris = {
     }
   },
     create: function() {
-      this.coords = [0,6];
+      // Для начала создадим квадрат
+    this.coords = [
+      [[-1,5],[-1,6]],
+       [[0,5], [0,6]]
+    ];
   },
     process: function() {
     // Если фигура соприкоснулась со стенкой или кирпичиком
@@ -65,10 +69,24 @@ var Tetris = {
     this.coords = [];
   },
   makeStep: function() {
-    // Следующий шаг - значит, увеличиваем координату фигуры
-    this.coords[0]++;
-  }
+    Tetris.each(this.coords, function(i,j){
+      Tetris.figure.coords[i][j][0]++;
+    });
  },
+  checkCoords: function(row, col) {
+      var checked = false;
+      Tetris.each(this.coords, function(i,j){
+        var figureRow = Tetris.figure.coords[i][j][0];
+        var figureCol = Tetris.figure.coords[i][j][1];
+        if (figureRow == row) {
+          if (figureCol == col) {
+            checked = true;
+          }
+        }
+      });
+      return checked;
+    }
+  },
 init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
@@ -114,17 +132,26 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
         } else {
           tetrisDom.innerHTML += Tetris.config.freeBrick;
     } 
-   }
-  }
+   });
  },
- checkGameOver: function() {
-   // Если на момент проверки фигура находится на верхней строчке - Game over
-    if (Tetris.figure.coords[0] == 0) {
-      alert('Game over');
-      clearInterval(Tetris.tickHandler);
-    } else {
-      return false;
+  checkGameOver: function() {
+    var gameover = false;
+    Tetris.each(Tetris.figure.coords, function(i,j){
+      var figureRow = Tetris.figure.coords[i][j][0];
+      if (figureRow == 0 && !gameover) {
+        alert('Game over');
+        clearInterval(Tetris.tickHandler);
+        gameover = true;
+      }
+    });
+    return gameover;
+  },
+  each: function(coords, callback) {
+    for (var i = 0; i < coords.length; i++) {
+      for (var j = 0; j < coords[i].length; j++) {
+        callback(i,j);
     }
+   }
   }
 };
 Tetris.init();
