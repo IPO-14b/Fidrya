@@ -8,21 +8,42 @@ var Tetris = {
     width: 12,
     height: 20
     bricks: []
+    getDom: function() {
+      return document.getElementById(Tetris.config.pitchID);
+    }
   },
-  startBtn: document.getElementById('start-btn')
-};
+startBtn: document.getElementById('start-btn')
+init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
   Tetris.pitch.bricks[i] = [];
   for (var j = 0; j < Tetris.pitch.width; j++) {
     Tetris.pitch.bricks[i][j] = 0;
-  }
-}
-//теперь можно рисовать только после нажатия кнопки Start
+   }
+ }
+// Если пользователь кликнул по кнопке «Старт»
 Tetris.startBtn.onclick = function () {
-// Найдем на странице элемент, в котором будем рисовать тетрис
-var tetrisDom = document.getElementById(Tetris.config.pitchID);
-
+  // Заменяем вызов метода draw на вызов метода tick
+        Tetris.tick();
+    }
+  },
+ tick: function() {
+    Tetris.draw();
+    Tetris.i = Tetris.i || 0;
+    Tetris.i++;
+    alert(Tetris.i);
+    if (Tetris.i >= 3) {
+    	clearInterval(Tetris.tickHandler);
+    }
+    if (Tetris.tickHandler === undefined) {
+      Tetris.tickHandler = setInterval(function(){
+        Tetris.tick();
+      }, 1000);
+    }
+  },
+draw: function() {
+// А вот здесь вызовем метод getDom и присвоим его вывод переменной
+var tetrisDom = Tetris.pitch.getDom();
 // Очистим на всякий случай его
 tetrisDom.innerHTML = '';
 // И пробежимся по массиву кирпичиков
@@ -33,5 +54,9 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
     tetrisDom.innerHTML += Tetris.pitch.bricks[i][j]
                          ? Tetris.config.filledBrick
                          : Tetris.config.freeBrick;
+    
+   }
   }
-}
+ }
+};
+Tetris.init();
