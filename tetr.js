@@ -3,6 +3,7 @@ var Tetris = {
     pitchID: "tetris",
     freeBrick: "<b></b>",
     filledBrick: "<i></i>",
+    speed: 500,
     figureTypes: {
       I: function() {
         return [
@@ -123,42 +124,46 @@ var Tetris = {
     });
  },
    rollback: false,// пока ничего не случилось, откатывать ничего не надо
+   sideStepSpeed: 0,
    sideStep: function(direction) {
-      // Менять координату нужно у каждого кирпичика в составе фигуры
+      if (!this.sideStepSpeed) {
+        this.sideStepSpeed = 50;
+        this.sideStepHandler = setInterval(function(){
+          Tetris.figure.sideStep(direction);
+        }, this.sideStepSpeed);
+      }
+    },
+    sideStepStop: function() {
+      if (this.sideStepHandler != undefined || !this.sideStepHandler) {
+        this.sideStepSpeed = 0;
+        clearInterval(this.sideStepHandler);
+      }
+    },
+    sideStep: function(direction) {
       Tetris.each(this.coords, function(i,j){
         if (direction == 'right') {
-          Tetris.figure.coords[i][j][1]++;
+        	Tetris.figure.coords[i][j][1]++;
         } else {
           Tetris.figure.coords[i][j][1]--;
         }
       });
-     // проверяем - не нарушены ли правила
       Tetris.each(this.coords, function(i,j){
         var coord = Tetris.figure.coords[i][j];
         var brick;
-        // у тех кирпичиков, которые уже появились на поле (у которых
-        // неотрицательная координата), проверяем - не уткнулись ли мы в стену
         if (coord[0] >= 0) {
           brick = Tetris.pitch.bricks[coord[0]][coord[1]];
-          // если клеточки не существует, значит, кирпичик «вылез» за пределы поля
           if (brick == undefined) {
-            // устанавливаем флаг «откатить»
             Tetris.figure.rollback = true;
           }
         }
-        // даже если мы не пересекли границы поля, мы могли все равно «уткнуться»,
-        // например, в кирпичик, который уже занимает клетку на поле
         if (Tetris.pitch.bricks[coord[0]] != undefined) {
           brick = Tetris.pitch.bricks[coord[0]][coord[1]];
           if (brick == 1) {
-            // в таком случае также устанавливаем флаг в true
             Tetris.figure.rollback = true;
           }
         }
       });
-      // Проверяем - был ли ранее установлен флаг
       if (this.rollback) {
-        // Если да, то меняем координаты в обратную сторону
         Tetris.each(this.coords, function(i,j){
           if (direction == 'right') {
             Tetris.figure.coords[i][j][1]--;
@@ -166,15 +171,12 @@ var Tetris = {
             Tetris.figure.coords[i][j][1]++;
           }
         });
-        // Не забываем переключить флаг обратно, чтобы не заблокировать
-        // все последующие перемещения
         this.rollback = false;
       } else {
-        // если же откатываться не надо, спокойно нарисуем новую позицию фигуры
         Tetris.draw();
       }
     },
-  checkCoords: function(row, col) {
+    checkCoords: function(row, col) {
       var checked = false;
       Tetris.each(this.coords, function(i,j){
         var figureRow = Tetris.figure.coords[i][j][0];
@@ -188,68 +190,75 @@ var Tetris = {
       return checked;
     }
   },
-init: function() {
-//В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
-for (var i = 0; i < Tetris.pitch.height; i++) {
-  Tetris.pitch.bricks[i] = [];
-  for (var j = 0; j < Tetris.pitch.width; j++) {
-    Tetris.pitch.bricks[i][j] = 0;
-   }
- }
-// Если пользователь кликнул по кнопке «Старт»
-Tetris.startBtn.onclick = function () {
-  // Заменяем вызов метода draw на вызов метода tick
-        Tetris.tick();
+  init: function() {
+    for (var i = 0; i < Tetris.pitch.height; i++) {
+      Tetris.pitch.bricks[i] = [];
+      for (var j = 0; j < Tetris.pitch.width; j++) {
+        Tetris.pitch.bricks[i][j] = 0;
+      }
     }
-window.onkeydown = function (event) {
+    Tetris.startBtn.onclick = function () {
+			Tetris.tick();
+    }
+    window.onkeydown = function (event) {
       var direction = '';
       if (event.keyCode == 39) {
         direction = 'right';
       } else if(event.keyCode == 37) {
         direction = 'left';
       }
-  // Если нажали кнопку «Влево» или «Вправо»
       if (direction) {
-        // «Прикажем» фигуре подвинутся в соответствующем направлении
-        Tetris.figure.sideStep(direction);
-      } else if(event.keyCode == 40) {//код кнопки «Вниз»
-        Tetris.tick();
+        Tetris.figure.sideStepStart(direction);
+      } else if(event.keyCode == 40) {
+        Tetris.setSpeed(30);
+      }
+    }
+    window.onkeyup = function (event) {
+      var direction = '';
+      if (event.keyCode == 39) {
+        direction = 'right';
+      } else if(event.keyCode == 37) {
+        direction = 'left';
+      }
+      if (direction) {
+        Tetris.figure.sideStepStop();
+      } else if(event.keyCode == 40) {
+        Tetris.setSpeed();
       }
     }
   },
- tick: function() {
+  tick: function() {
+    console.log('tick');
+    Tetris.figure.go();
     Tetris.draw();
-    Tetris.i = Tetris.i || 0;
-    Tetris.i++;
-    alert(Tetris.i);
-    if (Tetris.i >= 3) {
-    	clearInterval(Tetris.tickHandler);
-    }
     if (Tetris.tickHandler === undefined) {
-      Tetris.tickHandler = setInterval(function(){
-        Tetris.tick();
-      }, 1000);
+      Tetris.setSpeed();
     }
   },
-draw: function() {
-// А вот здесь вызовем метод getDom и присвоим его вывод переменной
-var tetrisDom = Tetris.pitch.getDom();
-// Очистим на всякий случай его
-tetrisDom.innerHTML = '';
-// И пробежимся по массиву кирпичиков
-for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
-  for (var j = 0; j < Tetris.pitch.bricks[i].length; j++) {
-    // Проверяем, есть ли кирпичик
-        if (Tetris.pitch.bricks[i][j] ||
-           // ИЛИ есть ли по этим координатам фигура
-           (Tetris.figure.coords[0] == i &&
-            Tetris.figure.coords[1] == j )) {
-          tetrisDom.innerHTML += Tetris.config.filledBrick;
-        } else {
-          tetrisDom.innerHTML += Tetris.config.freeBrick;
-    } 
-   });
- },
+  currentSpeed: 0,
+  setSpeed: function(speed) {
+    if (!speed) var speed = Tetris.config.speed;
+    if (speed != this.currentSpeed) {
+      if (Tetris.tickHandler !== undefined) {
+        clearInterval(Tetris.tickHandler);
+      }
+      Tetris.tickHandler = setInterval(function(){
+        Tetris.tick();
+      }, speed);
+      this.currentSpeed = speed;
+    }
+  },
+  draw: function() {
+    var tetrisDom = Tetris.pitch.getDom();
+    tetrisDom.innerHTML = '';
+    Tetris.each(Tetris.pitch.bricks, function(i,j){
+      if (Tetris.pitch.bricks[i][j] || Tetris.figure.checkCoords(i,j)) {
+        tetrisDom.innerHTML += Tetris.config.filledBrick;
+      } else {
+        tetrisDom.innerHTML += Tetris.config.freeBrick;
+      }
+    });
+  },
   checkGameOver: function() {
     var gameover = false;
     Tetris.each(Tetris.figure.coords, function(i,j){
@@ -266,8 +275,8 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
     for (var i = 0; i < coords.length; i++) {
       for (var j = 0; j < coords[i].length; j++) {
         callback(i,j);
+      }
     }
-   }
   }
 };
 Tetris.init();
