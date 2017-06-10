@@ -23,7 +23,16 @@ var Tetris = {
     }
   },
     create: function() {
-      this.coords = [0,6];
+      // Для начала создадим квадрат
+    this.coords = [
+      [[-1,5],[-1,6]],
+       [[0,5], [0,6]]
+    ];
+  for (var i = 0; i < coords.length; i++) {
+  for (var j = 0; j < coords[i].length; j++) {
+    // Здесь что-то делаем
+  }
+}
   },
     process: function() {
     // Если фигура соприкоснулась со стенкой или кирпичиком
