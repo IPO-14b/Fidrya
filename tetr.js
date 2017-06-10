@@ -11,13 +11,15 @@ var Tetris = {
   },
   startBtn: document.getElementById('start-btn')
 };
+init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
   Tetris.pitch.bricks[i] = [];
   for (var j = 0; j < Tetris.pitch.width; j++) {
     Tetris.pitch.bricks[i][j] = 0;
-  }
-}
+   }
+ }
+},
 // Если пользователь кликнул по кнопке «Старт»
 Tetris.startBtn.onclick = function () {
     // Приказываем тетрису нарисовать кадр
@@ -38,4 +40,8 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
                          ? Tetris.config.filledBrick
                          : Tetris.config.freeBrick;
   }
+};
+Tetris.init();
+Tetris.startBtn.onclick = function () {
+    Tetris.draw();
 }
