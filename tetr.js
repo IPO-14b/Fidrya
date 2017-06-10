@@ -55,12 +55,15 @@ tetrisDom.innerHTML = '';
 // И пробежимся по массиву кирпичиков
 for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
   for (var j = 0; j < Tetris.pitch.bricks[i].length; j++) {
-    // Добавляя на игровое поле пустой или заполненный кирпичик
-    // (если в массиве кирпичиков 1, ставим заполненный кирпичик, если 0 - пустой)
-    tetrisDom.innerHTML += Tetris.pitch.bricks[i][j]
-                         ? Tetris.config.filledBrick
-                         : Tetris.config.freeBrick;
-    
+    // Проверяем, есть ли кирпичик
+        if (Tetris.pitch.bricks[i][j] ||
+           // ИЛИ есть ли по этим координатам фигура
+           (Tetris.figure.coords[0] == i &&
+            Tetris.figure.coords[1] == j )) {
+          tetrisDom.innerHTML += Tetris.config.filledBrick;
+        } else {
+          tetrisDom.innerHTML += Tetris.config.freeBrick;
+    } 
    }
   }
  }
