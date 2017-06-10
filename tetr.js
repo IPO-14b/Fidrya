@@ -116,11 +116,17 @@ var Tetris = {
     return false;
   },
   joinToBricks: function() {
-    // Берем координаты фигуры и на её месте ставим кирпичик
-    // (1 - значит, клеточка занята кирпичиком, 0 - клеточка пустая,
-    // поэтому ставим единичку)
-    Tetris.pitch.bricks[this.coords[0]][this.coords[1]] = 1;
-  },
+  Tetris.each(this.coords, function(i,j){
+        var figureRow = Tetris.figure.coords[i][j][0];
+        var figureCol = Tetris.figure.coords[i][j][1];
+        if (figureRow >= 0) {
+          Tetris.pitch.bricks[figureRow][figureCol] = 1;
+        }
+      });
+      // Вот в этом месте фигура уже упала и была объединена с массивом кирпичиков
+      // Здесь и будем проверять линии
+      Tetris.checkLines();
+    },
   destroy: function() {
     // Чтобы освободить место для следующей фигуры, просто чистим координаты
     this.coords = [];
@@ -297,6 +303,30 @@ var Tetris = {
       }
     });
     return gameover;
+  },
+  checkLines: function() {
+    // Построим пустую линию (вдруг пригодится)
+    var emptyLine = [];
+    for (var i = 0; i < this.pitch.width; i++) {
+    	emptyLine.push(0);
+    }
+    // Пройдемся по строчкам
+    for (var i = 0; i < this.pitch.bricks.length; i++) {
+      var countFilled = 0; // будем считать количество заполненных клеток
+      for (var j = 0; j < this.pitch.bricks[i].length; j++) {
+        if (this.pitch.bricks[i][j]) {
+          countFilled++;
+        }
+      }
+      // Если количество заполненных клеток равно ширине игрового поля,
+      // значит вся линия заполнена. Её можно убирать
+      if (countFilled == this.pitch.width) {
+        // Удаляем строку из массива
+        this.pitch.bricks.splice(i, 1);
+        // И добавляем пустую линию в начало
+        this.pitch.bricks.unshift(emptyLine);
+      }
+    }
   },
   each: function(coords, callback) {
     for (var i = 0; i < coords.length; i++) {
