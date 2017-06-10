@@ -19,7 +19,7 @@ for (var i = 0; i < Tetris.pitch.height; i++) {
   }
 }
 //теперь можно рисовать только после нажатия кнопки Start
-Tetris.startBn.onclick = function (){
+Tetris.startBtn.onclick = function () {
 // Найдем на странице элемент, в котором будем рисовать тетрис
 var tetrisDom = document.getElementById(Tetris.config.pitchID);
 
