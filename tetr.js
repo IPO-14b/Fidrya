@@ -116,6 +116,15 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
     } 
    }
   }
- }
+ },
+ checkGameOver: function() {
+   // Если на момент проверки фигура находится на верхней строчке - Game over
+    if (Tetris.figure.coords[0] == 0) {
+      alert('Game over');
+      clearInterval(Tetris.tickHandler);
+    } else {
+      return false;
+    }
+  }
 };
 Tetris.init();
