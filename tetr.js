@@ -12,6 +12,12 @@ var Tetris = {
       return document.getElementById(Tetris.config.pitchID);
     }
   },
+  figure: {
+    coords: [],
+    create: function() {
+      this.coords = [0,6];
+    }
+  },
 startBtn: document.getElementById('start-btn')
 init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
