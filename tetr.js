@@ -4,6 +4,7 @@ var Tetris = {
     freeBrick: "<b></b>",
     filledBrick: "<i></i>"
 },
+  startBtn: document.getElementById('start-btn')
   pitch: {
     width: 12,
     height: 20
@@ -14,11 +15,60 @@ var Tetris = {
   },
   figure: {
     coords: [],
-    create: function() {
-      this.coords = [0,6];
+    go: function() {
+    if (this.coords.length == 0) {
+      this.create();
+    } else {
+      this.process();
     }
   },
-startBtn: document.getElementById('start-btn')
+    create: function() {
+      this.coords = [0,6];
+  },
+    process: function() {
+    // Если фигура соприкоснулась со стенкой или кирпичиком
+    if (this.touched()) {
+      // Объединяем её с массивом кирпичиков
+      this.joinToBricks();
+      // Проверяем, не закончилась ли игра
+      if (!Tetris.checkGameOver()) {
+        // Если нет - освобождаем место для новой фигуры
+        this.destroy();
+      }
+    } else {
+      // Если прикосновения не было, фигура делает один шаг вниз
+      this.makeStep();
+    }
+  },
+   touched: function() {
+    // Если следующей после фигуры строки в массиве кирпичиков не существует,
+    // значит мы достигли нижнего края поля. Поэтому возвращаем true - соприкосновение есть
+    if (Tetris.pitch.bricks[this.coords[0] + 1] == undefined) {
+      return true;
+    }
+    // Если на следующей строчке кирпичик есть
+    // значит, мы с ним соприкоснулись
+    if (Tetris.pitch.bricks[this.coords[0] + 1][this.coords[1]]) {
+      return true;
+    }
+    // Если ни одно из условий не выполнено - значит, соприкосновения нет
+    return false;
+  },
+  joinToBricks: function() {
+    // Берем координаты фигуры и на её месте ставим кирпичик
+    // (1 - значит, клеточка занята кирпичиком, 0 - клеточка пустая,
+    // поэтому ставим единичку)
+    Tetris.pitch.bricks[this.coords[0]][this.coords[1]] = 1;
+  },
+  destroy: function() {
+    // Чтобы освободить место для следующей фигуры, просто чистим координаты
+    this.coords = [];
+  },
+  makeStep: function() {
+    // Следующий шаг - значит, увеличиваем координату фигуры
+    this.coords[0]++;
+  }
+ },
 init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
@@ -66,6 +116,15 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
     } 
    }
   }
- }
+ },
+ checkGameOver: function() {
+   // Если на момент проверки фигура находится на верхней строчке - Game over
+    if (Tetris.figure.coords[0] == 0) {
+      alert('Game over');
+      clearInterval(Tetris.tickHandler);
+    } else {
+      return false;
+    }
+  }
 };
 Tetris.init();
