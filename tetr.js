@@ -73,6 +73,20 @@ var Tetris = {
       Tetris.figure.coords[i][j][0]++;
     });
  },
+  checkCoords: function(row, col) {
+      var checked = false;
+      Tetris.each(this.coords, function(i,j){
+        var figureRow = Tetris.figure.coords[i][j][0];
+        var figureCol = Tetris.figure.coords[i][j][1];
+        if (figureRow == row) {
+          if (figureCol == col) {
+            checked = true;
+          }
+        }
+      });
+      return checked;
+    }
+  },
 init: function() {
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
