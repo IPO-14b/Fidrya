@@ -7,5 +7,6 @@ var Tetris = {
   pitch: {
     width: 12,
     height: 20
+    bricks: []
   }
 };
