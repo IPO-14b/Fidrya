@@ -1,8 +1,15 @@
 var Tetris = {
   config: {
     pitchID: "tetris",
-    freeBrick: "<b></b>",
-    filledBrick: "<i></i>",
+    brick: "<b></b>",
+    freeBrick: {
+      background: "#000",
+      border: "1px solid #333"
+    },
+    filledBrick: {
+      background: "#fff",
+      border: "1px solid #999"
+    },
     speed: 500,
     figureTypes: {
       I: function() {
@@ -198,13 +205,15 @@ var Tetris = {
       }
     }
     Tetris.startBtn.onclick = function () {
-			Tetris.tick();
+    // Очищаем игровое поле
+      Tetris.clearPitch();
+      Tetris.tick();
     }
     window.onkeydown = function (event) {
       var direction = '';
       if (event.keyCode == 39) {
         direction = 'right';
-      } else if(event.keyCode == 37) {
+      } else if(event.keyC ode == 37) {
         direction = 'left';
       }
       if (direction) {
@@ -248,14 +257,32 @@ var Tetris = {
       this.currentSpeed = speed;
     }
   },
+  clearPitch: function() {
+    var tetrisDom = Tetris.pitch.getDom();
+    // Очищаем поле
+    tetrisDom.innerHTML = '';
+    // Рисуем пустые клеточки
+    Tetris.each(Tetris.pitch.bricks, function(i,j){
+       tetrisDom.innerHTML += Tetris.config.brick;
+    });
+  },
   draw: function() {
     var tetrisDom = Tetris.pitch.getDom();
-    tetrisDom.innerHTML = '';
     Tetris.each(Tetris.pitch.bricks, function(i,j){
+      // Для удобства определяем переменные со свойствами клеток
+      var fillBG = Tetris.config.filledBrick.background;
+      var freeBG = Tetris.config.freeBrick.background;
+      var fillBorder = Tetris.config.filledBrick.border;
+      var freeBorder = Tetris.config.freeBrick.border;
+      // Рассчитываем порядковый номер клеточки
+      var brickIndex = i * Tetris.pitch.width + j;
+      // И разукрашиваем её в соответствующий цвет
       if (Tetris.pitch.bricks[i][j] || Tetris.figure.checkCoords(i,j)) {
-        tetrisDom.innerHTML += Tetris.config.filledBrick;
+        tetrisDom.getElementsByTagName('b')[brickIndex].style.background = fillBG;
+        tetrisDom.getElementsByTagName('b')[brickIndex].style.border = fillBorder;
       } else {
-        tetrisDom.innerHTML += Tetris.config.freeBrick;
+        tetrisDom.getElementsByTagName('b')[brickIndex].style.background = freeBG;
+        tetrisDom.getElementsByTagName('b')[brickIndex].style.border = freeBorder;
       }
     });
   },
