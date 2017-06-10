@@ -149,6 +149,21 @@ Tetris.startBtn.onclick = function () {
   // Заменяем вызов метода draw на вызов метода tick
         Tetris.tick();
     }
+window.onkeydown = function (event) {
+      var direction = '';
+      if (event.keyCode == 39) {
+        direction = 'right';
+      } else if(event.keyCode == 37) {
+        direction = 'left';
+      }
+  // Если нажали кнопку «Влево» или «Вправо»
+      if (direction) {
+        // «Прикажем» фигуре подвинутся в соответствующем направлении
+        Tetris.figure.sideStep(direction);
+      } else if(event.keyCode == 40) {//код кнопки «Вниз»
+        Tetris.tick();
+      }
+    }
   },
  tick: function() {
     Tetris.draw();
