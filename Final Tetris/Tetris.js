@@ -2,8 +2,13 @@
 *
 *параметры программы
 *
-*@var 
-
+*@var object Tetris
+*@var string pitchID
+*@var object brick
+*@var int background
+*@var string border
+*@var int speed
+*/
 var Tetris = {
   config: {
     pitchID: "tetris",
@@ -17,6 +22,18 @@ var Tetris = {
       border: "1px solid #999"
     },
     speed: 1000,
+    /**
+    *
+    *функции построения фигур
+    *@param i
+    *@param j
+    *@param l
+    *@param o
+    *@param i
+    *@param s
+    *@param t
+    *@param z
+    */
     figureTypes: {
       I: function() {
         return [
@@ -66,6 +83,15 @@ var Tetris = {
       }
     }
   },
+  
+  
+  /**
+  *
+  *функция getdome
+  *
+  *@param geDome
+  *
+  */
   startBtn: document.getElementById('start-btn'),
   pitch: {
     width: 12,
@@ -75,6 +101,13 @@ var Tetris = {
       return document.getElementById(Tetris.config.pitchID);
     }
   },
+  
+  
+  /**
+  *
+  *@param go
+  *
+  */
   figure: {
 		coords: [],
     go: function() {
@@ -84,9 +117,28 @@ var Tetris = {
         this.process();
       }
     },
+    
+    
+  /**
+  *
+  *функция создания рандомной фигуры
+  *
+  *@param create
+  *
+  */
     create: function() {
       this.getRandomFigure();
     },
+    
+  /**
+  *
+  *функция кручения фигуры
+  *
+  *@var int rotatePosition
+  *@param create
+  *
+  *
+  */
     rotatePosition: 0,
     rotate: function() {
       if (this.coords.length == 0) {
@@ -119,6 +171,16 @@ var Tetris = {
         this.setRotatedCoords();
         this.setRotatedCoords();
     },
+    
+    
+  /**
+  *
+  *функция определения стороны вращения
+  *
+  *@var string newCoords
+  *@param setRotateCoords
+  *
+  */
     setRotatedCoords: function() {
       var newCoords = [];
       switch(this.type) {
@@ -355,6 +417,17 @@ var Tetris = {
           break;
       }
     },
+    
+    
+  /**
+  *
+  *функция отрисовки рандомной фигуры
+  *
+  *@var object keys
+  *@var math randKey
+  *@param getRandomFigure
+  *
+  */
     getRandomFigure: function() {
       var keys = Object.keys(Tetris.config.figureTypes);
       var randKey = Math.floor(Math.random() * keys.length);
@@ -379,6 +452,16 @@ var Tetris = {
         this.makeStep();
       }
     },
+    
+    
+  /**
+  *
+  *функция определения нажатия клавиши
+  *
+  *@var bool contact
+  *@param t
+  *
+  */
     touched: function() {
       var contact = false;
       Tetris.each(this.coords, function(i,j){
@@ -402,6 +485,8 @@ var Tetris = {
       }
       return false;
     },
+    
+    
     joinToBricks: function() {
       Tetris.each(this.coords, function(i,j){
         var figureRow = Tetris.figure.coords[i][j][0];
@@ -412,10 +497,14 @@ var Tetris = {
       });
       Tetris.checkLines();
     },
+    
+    
     destroy: function() {
       this.coords = [];
       this.rotatePosition = 0;
     },
+    
+    
     makeStep: function() {
       Tetris.each(this.coords, function(i,j){
         Tetris.figure.coords[i][j][0]++;
@@ -431,12 +520,15 @@ var Tetris = {
         }, this.sideStepSpeed);
       }
     },
+    
+    
     sideStepStop: function() {
       if (this.sideStepHandler != undefined || !this.sideStepHandler) {
         this.sideStepSpeed = 0;
         clearInterval(this.sideStepHandler);
       }
     },
+    
     sideStep: function(direction) {
       Tetris.each(this.coords, function(i,j){
         if (direction == 'right') {
@@ -488,6 +580,8 @@ var Tetris = {
       return checked;
     }
   },
+  
+  
   init: function() {
     for (var i = 0; i < Tetris.pitch.height; i++) {
       Tetris.pitch.bricks[i] = [];
@@ -515,6 +609,8 @@ var Tetris = {
         Tetris.figure.rotate();
       }
     }
+    
+    
     window.onkeyup = function (event) {
       var direction = '';
       if (event.keyCode == 39) {
@@ -529,6 +625,8 @@ var Tetris = {
       }
     }
   },
+  
+  
   tick: function() {
     console.log('tick');
     Tetris.figure.go();
@@ -537,6 +635,8 @@ var Tetris = {
       Tetris.setSpeed();
     }
   },
+  
+  
   currentSpeed: 0,
   setSpeed: function(speed) {
     if (!speed) var speed = Tetris.config.speed;
@@ -550,6 +650,8 @@ var Tetris = {
       this.currentSpeed = speed;
     }
   },
+  
+  
   clearPitch: function() {
     var tetrisDom = Tetris.pitch.getDom();
     tetrisDom.innerHTML = '';
@@ -557,6 +659,8 @@ var Tetris = {
       tetrisDom.innerHTML += Tetris.config.brick;
     });
   },
+  
+  
   draw: function() {
     var tetrisDom = Tetris.pitch.getDom();
     Tetris.each(Tetris.pitch.bricks, function(i,j){
@@ -574,6 +678,16 @@ var Tetris = {
       }
     });
   },
+  
+  /**
+  *
+  *функция определения конца игры
+  *
+  *
+  *@var bool gameover
+  *@param C
+  *
+  */
   checkGameOver: function() {
     var gameover = false;
     Tetris.each(Tetris.figure.coords, function(i,j){
@@ -586,6 +700,15 @@ var Tetris = {
     });
     return gameover;
   },
+  
+  /**
+  *
+  *функция определения границы карты
+  *
+  *@var object emptyLine
+  *@param checkLines
+  *
+  */
   checkLines: function() {
     var emptyLine = [];
     for (var i = 0; i < this.pitch.width; i++) {
