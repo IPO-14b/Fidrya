@@ -23,6 +23,17 @@ for (var i = 0; i < Tetris.pitch.height; i++) {
  }
 // Если пользователь кликнул по кнопке «Старт»
 Tetris.startBtn.onclick = function () {
+  // Заменяем вызов метода draw на вызов метода tick
+        Tetris.tick();
+    }
+  },
+  tick: function() {
+    Tetris.draw();
+    console.log('tick');
+    setInterval(function(){
+        Tetris.tick();
+    }, 1000);
+  }
     // Приказываем тетрису нарисовать кадр
     Tetris.draw();
   }
