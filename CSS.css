@@ -1,0 +1,13 @@
+<style>
+#start-btn {
+  display: block;
+  width: 30%;
+  margin: 70% auto 0;
+  padding: 20px;
+  background: #eee;
+  text-align: center;
+  cursor: pointer;
+}
+#start-btn:hover {
+  background: #fff;
+}
