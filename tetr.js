@@ -122,6 +122,16 @@ var Tetris = {
       Tetris.figure.coords[i][j][0]++;
     });
  },
+   sideStep: function(direction) {
+      // Менять координату нужно у каждого кирпичика в составе фигуры
+      Tetris.each(this.coords, function(i,j){
+        if (direction == 'right') {
+          Tetris.figure.coords[i][j][1]++;
+        } else {
+          Tetris.figure.coords[i][j][1]--;
+        }
+      });
+    },
   checkCoords: function(row, col) {
       var checked = false;
       Tetris.each(this.coords, function(i,j){
