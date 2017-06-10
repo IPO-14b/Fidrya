@@ -4,7 +4,7 @@ var Tetris = {
     freeBrick: "<b></b>",
     filledBrick: "<i></i>",
     figureTypes: {
-       I: function() {
+      I: function() {
         return [
           [[-3,5]],
           [[-2,5]],
@@ -50,7 +50,7 @@ var Tetris = {
                     [[0,5], [0,6]]
           ];
       }
-    }   
+    }
 },
   startBtn: document.getElementById('start-btn')
   pitch: {
