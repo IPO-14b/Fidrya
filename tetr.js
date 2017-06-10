@@ -8,7 +8,8 @@ var Tetris = {
     width: 12,
     height: 20
     bricks: []
-  }
+  },
+  startBtn: document.getElementById('start-btn')
 };
 //В самом начале игры на поле нет ни одного кирпичика. Значит, все клетки пустые. Заполним массив bricks нулями.
 for (var i = 0; i < Tetris.pitch.height; i++) {
