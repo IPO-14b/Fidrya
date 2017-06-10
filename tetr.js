@@ -14,8 +14,29 @@ var Tetris = {
   },
   figure: {
     coords: [],
+    go: function() {
+    if (this.coords.length == 0) {
+      this.create();
+    } else {
+      this.process();
+    }
+  },
     create: function() {
       this.coords = [0,6];
+  },
+    process: function() {
+    // Если фигура соприкоснулась со стенкой или кирпичиком
+    if (this.touched()) {
+      // Объединяем её с массивом кирпичиков
+      this.joinToBricks();
+      // Проверяем, не закончилась ли игра
+      if (!Tetris.checkGameOver()) {
+        // Если нет - освобождаем место для новой фигуры
+        this.destroy();
+      }
+    } else {
+      // Если прикосновения не было, фигура делает один шаг вниз
+      this.makeStep();
     }
   },
 startBtn: document.getElementById('start-btn')
