@@ -27,17 +27,20 @@ Tetris.startBtn.onclick = function () {
         Tetris.tick();
     }
   },
-  tick: function() {
+ tick: function() {
     Tetris.draw();
-    console.log('tick');
-    setInterval(function(){
+    Tetris.i = Tetris.i || 0;
+    Tetris.i++;
+    alert(Tetris.i);
+    if (Tetris.i >= 3) {
+    	clearInterval(Tetris.tickHandler);
+    }
+    if (Tetris.tickHandler === undefined) {
+      Tetris.tickHandler = setInterval(function(){
         Tetris.tick();
-    }, 1000);
-  }
-    // Приказываем тетрису нарисовать кадр
-    Tetris.draw();
-  }
-},
+      }, 1000);
+    }
+  },
 draw: function() {
 // А вот здесь вызовем метод getDom и присвоим его вывод переменной
 var tetrisDom = Tetris.pitch.getDom();
