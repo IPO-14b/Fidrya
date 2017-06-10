@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This document was created with Syntext Serna Free. --><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "docbookV4.5/docbookx.dtd" []>
+<article>
+  <title>Tetris</title>
+  <para><emphasis role="bold">РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ</emphasis></para>
+  <para>Данный документ описывает сценарии взаимодействия пользователя с ПО</para>
+  <abstract>
+    <title>Пример 1: Движение фигур в стороны</title>
+    <para>Функция позволяет осуществить движение влево и вправо по нажатию клавиши</para>
+    <para>window.onkeydown = function (event) {</para>
+    <para>var direction = &apos;&apos;;</para>
+    <para>if (event.keyCode == 39) {</para>
+    <para>direction = &apos;right&apos;;</para>
+    <para>} else if(event.keyCode == 37) {;</para>
+    <para>  direction = &apos;left&apos;;</para>
+    <para>  {</para>
+    <para>  if (direction) {</para>
+    <para> Tetris.figure.sideStep(direction);</para>
+    <para> } else if(event.keyCode == 40) {</para>
+    <para>Tetris.tick();</para>
+    <para>  }</para>
+    <para>}</para>
+  </abstract>
+  <abstract>
+    <title>Пример 2: Game Over</title>
+    <para>Функция позволяет определять, когда игрок вышел башней за пределы линии экрана</para>
+    <para>checkGameOver: function() {</para>
+    <para>        if (Tetris.figure.coords[0] == 0) {</para>
+    <para>       alert(&apos;Game over&apos;);</para>
+    <para>           clearInterval(Tetris.tickHandler);</para>
+    <para>} else {</para>
+    <para> return false;</para>
+    <para>      }</para>
+    <para>      },</para>
+  </abstract>
+  <abstract>
+    <title>Пример 3: Поворот элемента</title>
+    <para>Вызывается по нажанию клавиши &quot;вверх&quot;.</para>
+    <para>Функция предоставляет возможность, поворачивать фигур по часовой стрелке.</para>
+    <para>window.onkeydown = function (event) {</para>
+    <para>        var direction = &apos;&apos;;</para>
+    <para>            if (event.keyCode == 39) {</para>
+    <para>              direction = &apos;right&apos;;</para>
+    <para>               } else if(event.keyCode == 37) {</para>
+    <para>direction = &apos;left&apos;;</para>
+    <para>            }</para>
+    <para>               if (direction) {
+</para>
+    <para>             Tetris.figure.sideStepStart(direction);</para>
+    <para>         } else if(event.keyCode == 40) {</para>
+    <para>             Tetris.setSpeed(30);  </para>
+    <para>            }</para>
+    <para>if (event.keyCode == 38) {</para>
+    <para>Tetris.figure.rotate()</para>
+    <para>          }                   </para>
+    <para>         }</para>
+  </abstract>
+</article>
