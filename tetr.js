@@ -19,12 +19,12 @@ for (var i = 0; i < Tetris.pitch.height; i++) {
     Tetris.pitch.bricks[i][j] = 0;
    }
  }
-},
 // Если пользователь кликнул по кнопке «Старт»
 Tetris.startBtn.onclick = function () {
     // Приказываем тетрису нарисовать кадр
     Tetris.draw();
   }
+},
 draw: function() {
 // Найдем на странице элемент, в котором будем рисовать тетрис
 var tetrisDom = document.getElementById(Tetris.config.pitchID);
@@ -39,9 +39,9 @@ for (var i = 0; i < Tetris.pitch.bricks.length; i++) {
     tetrisDom.innerHTML += Tetris.pitch.bricks[i][j]
                          ? Tetris.config.filledBrick
                          : Tetris.config.freeBrick;
+    
+   }
   }
+ }
 };
 Tetris.init();
-Tetris.startBtn.onclick = function () {
-    Tetris.draw();
-}
