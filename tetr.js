@@ -4,39 +4,53 @@ var Tetris = {
     freeBrick: "<b></b>",
     filledBrick: "<i></i>",
     figureTypes: {
-      I: [
+       I: function() {
+        return [
           [[-3,5]],
           [[-2,5]],
           [[-1,5]],
           [[ 0,5]]
-      	],
-      J: [
+      	];
+      },
+      J: function() {
+        return [
                [[-2,6]],
                [[-1,6]],
           [[0,5],[0,6]]
-      ],
-      L: [
+      ];
+      },
+      L: function() {
+        return [
           [[-2,5]],
           [[-1,5]],
           [[0,5],[0,6]]
-      ],
-      O: [
-        [[-1,5],[-1,5]],
+      ];
+      },
+      O: function() {
+        return [
+        [[-1,5],[-1,6]],
         [[ 0,5], [0,6]]
-      ],
-      S: [
+      ];
+      },
+      S: function() {
+        return [
               [[-1,6],[-1,7]],
         [[0,5], [0,6]]
-      ],
-      T: [
+      ];
+      },
+      T: function() {
+        return [
         [[-1,5],[-1,6],[-1,7]],
                [[0,6]]
-      ],
-      Z: [
-        [[-1,4],[-1,5]],
-                [[0,5], [0,6]]
-      ]
-    }
+      ];
+      },
+      Z: function() {
+        return [
+            [[-1,4],[-1,5]],
+                    [[0,5], [0,6]]
+          ];
+      }
+    }   
 },
   startBtn: document.getElementById('start-btn')
   pitch: {
