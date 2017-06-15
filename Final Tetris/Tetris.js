@@ -486,7 +486,15 @@ var Tetris = {
       return false;
     },
     
-    
+  /**
+  *
+  *функция соединения керпичей
+  *
+  *@var int figureRow
+  *@var int figureCol
+  *@param d
+  *
+  */
     joinToBricks: function() {
       Tetris.each(this.coords, function(i,j){
         var figureRow = Tetris.figure.coords[i][j][0];
@@ -498,13 +506,25 @@ var Tetris = {
       Tetris.checkLines();
     },
     
-    
+  /**
+  *
+  *функция определения разрушения линии
+  *
+  *@param d
+  *
+  */
     destroy: function() {
       this.coords = [];
       this.rotatePosition = 0;
     },
     
-    
+  /**
+  *
+  *функция движения фигуры
+  *
+  *@param m
+  *
+  */
     makeStep: function() {
       Tetris.each(this.coords, function(i,j){
         Tetris.figure.coords[i][j][0]++;
