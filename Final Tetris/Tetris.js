@@ -45,41 +45,41 @@ var Tetris = {
             },
             J: function() {
                 return [
-                             [[-2,6]],
-                             [[-1,6]],
+                    [[-2,6]],
+                    [[-1,6]],
                     [[0,5],[0,6]]
-            ];
+                ];
             },
             L: function() {
                 return [
                     [[-2,5]],
                     [[-1,5]],
                     [[0,5],[0,6]]
-            ];
+                ];
             },
             O: function() {
                 return [
                 [[-1,5],[-1,6]],
                 [[ 0,5], [0,6]]
-            ];
+                ];
             },
             S: function() {
                 return [
-                            [[-1,6],[-1,7]],
-                [[0,5], [0,6]]
-            ];
+                    [[-1,6],[-1,7]],
+                    [[0,5], [0,6]]
+                ];
             },
             T: function() {
                 return [
-                [[-1,5],[-1,6],[-1,7]],
-                             [[0,6]]
-            ];
+                    [[-1,5],[-1,6],[-1,7]],
+                    [[0,6]]
+                ];
             },
             Z: function() {
                 return [
-                        [[-1,4],[-1,5]],
-                                        [[0,5], [0,6]]
-                    ];
+                    [[-1,4],[-1,5]],
+                    [[0,5], [0,6]]
+                ];
             }
         }
     },
@@ -188,24 +188,24 @@ var Tetris = {
                     switch(this.rotatePosition) {
                         case 0:
                             newCoords.push([
-                                    [this.coords[2][0][0], this.coords[2][0][1]-1],
-                                    [this.coords[2][0][0], this.coords[2][0][1]],
-                                    [this.coords[2][0][0], this.coords[2][0][1]+1],
-                                    [this.coords[2][0][0], this.coords[2][0][1]+2]
+                                [this.coords[2][0][0], this.coords[2][0][1]-1],
+                                [this.coords[2][0][0], this.coords[2][0][1]],
+                                [this.coords[2][0][0], this.coords[2][0][1]+1],
+                                [this.coords[2][0][0], this.coords[2][0][1]+2]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
                         case 1:
                             newCoords.push([
-                                    [this.coords[0][1][0]-2, this.coords[0][1][1]]
-                                ],[
-                                    [this.coords[0][1][0]-1, this.coords[0][1][1]]
-                                ],[
-                                    [this.coords[0][1][0],     this.coords[0][1][1]]
-                                ],[
-                                    [this.coords[0][1][0]+1, this.coords[0][1][1]]
-                            ]);
+                                [this.coords[0][1][0]-2, this.coords[0][1][1]]
+                           ],[
+                                [this.coords[0][1][0]-1, this.coords[0][1][1]]
+                           ],[
+                                [this.coords[0][1][0],     this.coords[0][1][1]]
+                           ],[
+                                [this.coords[0][1][0]+1, this.coords[0][1][1]]
+                           ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
                             break;
@@ -215,23 +215,23 @@ var Tetris = {
                     switch(this.rotatePosition) {
                         case 0:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]-1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]]
-                                ],[
-                                    [this.coords[1][1][0]+1, this.coords[1][1][1]]
+                                [this.coords[0][0][0], this.coords[0][0][1]-1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]]
+                            ],[
+                                [this.coords[1][1][0]+1, this.coords[1][1][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
                         case 1:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]+1],
-                                    [this.coords[0][0][0], this.coords[0][0][1]+2]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]]
+                                [this.coords[0][0][0], this.coords[0][0][1]+1],
+                                [this.coords[0][0][0], this.coords[0][0][1]+2]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
@@ -242,23 +242,23 @@ var Tetris = {
                     switch(this.rotatePosition) {
                         case 0:
                             newCoords.push([
-                                    [this.coords[0][1][0], this.coords[0][1][1]+1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]]
-                                ],[
-                                    [this.coords[1][0][0]+1, this.coords[1][0][1]]
+                                [this.coords[0][1][0], this.coords[0][1][1]+1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]]
+                            ],[
+                                [this.coords[1][0][0]+1, this.coords[1][0][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
                         case 1:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]-2],
-                                    [this.coords[0][0][0], this.coords[0][0][1]-1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]]
+                                [this.coords[0][0][0], this.coords[0][0][1]-2],
+                                [this.coords[0][0][0], this.coords[0][0][1]-1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
@@ -269,46 +269,46 @@ var Tetris = {
                     switch(this.rotatePosition) {
                         case 0:
                             newCoords.push([
-                                    [this.coords[0][1][0]-1, this.coords[0][1][1]]
-                                ],[
-                                    [this.coords[0][0][0], this.coords[0][0][1]],
-                                    [this.coords[0][1][0], this.coords[0][1][1]]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]]
+                                [this.coords[0][1][0]-1, this.coords[0][1][1]]
+                             ],[
+                                [this.coords[0][0][0], this.coords[0][0][1]],
+                                [this.coords[0][1][0], this.coords[0][1][1]]
+                             ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
                         case 1:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]+1]
+                                [this.coords[0][0][0], this.coords[0][0][1]]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]+1]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 2;
                             break;
                         case 2:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]]
-                                ],[
-                                    [this.coords[1][1][0], this.coords[1][1][1]],
-                                    [this.coords[1][2][0], this.coords[1][2][1]]
-                                ],[
-                                    [this.coords[1][1][0]+1, this.coords[1][1][1]]
+                                [this.coords[0][0][0], this.coords[0][0][1]]
+                            ],[
+                                [this.coords[1][1][0], this.coords[1][1][1]],
+                                [this.coords[1][2][0], this.coords[1][2][1]]
+                            ],[
+                                [this.coords[1][1][0]+1, this.coords[1][1][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 3;
                             break;
                         case 3:
                             newCoords.push([
-                                    [this.coords[1][0][0], this.coords[0][0][1]-1],
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][1][0], this.coords[1][1][1]]
-                                ],[
-                                    [this.coords[2][0][0], this.coords[2][0][1]]
+                                [this.coords[1][0][0], this.coords[0][0][1]-1],
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][1][0], this.coords[1][1][1]]
+                            ],[
+                                [this.coords[2][0][0], this.coords[2][0][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
@@ -319,46 +319,46 @@ var Tetris = {
                     switch(this.rotatePosition) {
                         case 0:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]-1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]-1],
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][0][0], this.coords[1][0][1]+1]
+                                [this.coords[0][0][0], this.coords[0][0][1]-1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]-1],
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][0][0], this.coords[1][0][1]+1]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
                         case 1:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]],
-                                    [this.coords[0][0][0], this.coords[0][0][1]+1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]]
-                                ],[
-                                    [this.coords[1][0][0]+1, this.coords[1][0][1]]
+                                [this.coords[0][0][0], this.coords[0][0][1]],
+                                [this.coords[0][0][0], this.coords[0][0][1]+1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]]
+                            ],[
+                                [this.coords[1][0][0]+1, this.coords[1][0][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 2;
                             break;
                         case 2:
                             newCoords.push([
-                                    [this.coords[1][0][0], this.coords[1][0][1]-1],
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][0][0], this.coords[1][0][1]+1]
-                                ],[
-                                    [this.coords[1][0][0]+1, this.coords[1][0][1]+1]
+                                [this.coords[1][0][0], this.coords[1][0][1]-1],
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][0][0], this.coords[1][0][1]+1]
+                            ],[
+                                [this.coords[1][0][0]+1, this.coords[1][0][1]+1]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 3;
                             break;
                         case 3:
                             newCoords.push([
-                                    [this.coords[0][1][0]-1, this.coords[0][1][1]+1]
-                                ],[
-                                    [this.coords[0][1][0], this.coords[0][1][1]+1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]-1],
-                                    [this.coords[1][0][0], this.coords[1][0][1]]
+                                [this.coords[0][1][0]-1, this.coords[0][1][1]+1]
+                            ],[
+                                [this.coords[0][1][0], this.coords[0][1][1]+1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]-1],
+                                [this.coords[1][0][0], this.coords[1][0][1]]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
@@ -369,46 +369,46 @@ var Tetris = {
                     switch(this.rotatePosition) {
                         case 0:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]+1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]-1],
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][0][0], this.coords[1][0][1]+1]
+                                [this.coords[0][0][0], this.coords[0][0][1]+1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]-1],
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][0][0], this.coords[1][0][1]+1]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
                         case 1:
                             newCoords.push([
-                                    [this.coords[0][0][0], this.coords[0][0][1]-1],
-                                    [this.coords[0][0][0], this.coords[0][0][1]]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]+2]
-                                ],[
-                                    [this.coords[1][0][0]+1, this.coords[1][0][1]+2]
+                                [this.coords[0][0][0], this.coords[0][0][1]-1],
+                                [this.coords[0][0][0], this.coords[0][0][1]]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]+2]
+                            ],[
+                                [this.coords[1][0][0]+1, this.coords[1][0][1]+2]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 2;
                             break;
                         case 2:
                             newCoords.push([
-                                    [this.coords[1][0][0], this.coords[1][0][1]+1],
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][0][0], this.coords[1][0][1]-1]
-                                ],[
-                                    [this.coords[1][0][0]+1, this.coords[1][0][1]-1]
+                                [this.coords[1][0][0], this.coords[1][0][1]+1],
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][0][0], this.coords[1][0][1]-1]
+                            ],[
+                                [this.coords[1][0][0]+1, this.coords[1][0][1]-1]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 3;
                             break;
                         case 3:
                             newCoords.push([
-                                    [this.coords[0][1][0]-1, this.coords[0][1][1]-1]
-                                ],[
-                                    [this.coords[0][1][0], this.coords[0][1][1]-1]
-                                ],[
-                                    [this.coords[1][0][0], this.coords[1][0][1]],
-                                    [this.coords[1][0][0], this.coords[1][0][1]+1]
+                                [this.coords[0][1][0]-1, this.coords[0][1][1]-1]
+                            ],[
+                                [this.coords[0][1][0], this.coords[0][1][1]-1]
+                            ],[
+                                [this.coords[1][0][0], this.coords[1][0][1]],
+                                [this.coords[1][0][0], this.coords[1][0][1]+1]
                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
