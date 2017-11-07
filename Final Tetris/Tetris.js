@@ -119,27 +119,27 @@ var Tetris = {
         },
         
         
-    /**
-    *
-    *функция создания рандомной фигуры
-    *
-    *@param create
-    *
-    */
+        /**
+        *
+        *функция создания рандомной фигуры
+        *
+        *@param create
+        *
+        */
         create: function() {
             this.getRandomFigure();
         },
         
-    /**
-    *
-    *функция кручения фигуры
-    *
-    *@var int rotatePosition
-    *@param create
-    *
-    *
-    */
         rotatePosition: 0,
+        /**
+        *
+        *функция кручения фигуры
+        *
+        *@var int rotatePosition
+        *@param create
+        *
+        *
+        */ 
         rotate: function() {
             if (this.coords.length == 0) {
                 return false;
@@ -173,14 +173,14 @@ var Tetris = {
         },
         
         
-    /**
-    *
-    *функция определения стороны вращения
-    *
-    *@var string newCoords
-    *@param setRotateCoords
-    *
-    */
+        /**
+        *
+        *функция определения стороны вращения
+        *
+        *@var string newCoords
+        *@param setRotateCoords
+        *
+        */
         setRotatedCoords: function() {
             var newCoords = [];
             switch(this.type) {
@@ -199,13 +199,13 @@ var Tetris = {
                         case 1:
                             newCoords.push([
                                 [this.coords[0][1][0]-2, this.coords[0][1][1]]
-                           ],[
+                            ],[
                                 [this.coords[0][1][0]-1, this.coords[0][1][1]]
-                           ],[
+                            ],[
                                 [this.coords[0][1][0],     this.coords[0][1][1]]
-                           ],[
+                            ],[
                                 [this.coords[0][1][0]+1, this.coords[0][1][1]]
-                           ]);
+                            ]);
                             this.coords = newCoords;
                             this.rotatePosition = 0;
                             break;
@@ -275,7 +275,7 @@ var Tetris = {
                                 [this.coords[0][1][0], this.coords[0][1][1]]
                              ],[
                                 [this.coords[1][0][0], this.coords[1][0][1]]
-                            ]);
+                             ]);
                             this.coords = newCoords;
                             this.rotatePosition = 1;
                             break;
@@ -419,15 +419,15 @@ var Tetris = {
         },
         
         
-    /**
-    *
-    *функция отрисовки рандомной фигуры
-    *
-    *@var object keys
-    *@var math randKey
-    *@param getRandomFigure
-    *
-    */
+        /**
+        *
+        *функция отрисовки рандомной фигуры
+        *
+        *@var object keys
+        *@var math randKey
+        *@param getRandomFigure
+        *
+        */
         getRandomFigure: function() {
             var keys = Object.keys(Tetris.config.figureTypes);
             var randKey = Math.floor(Math.random() * keys.length);
@@ -454,14 +454,14 @@ var Tetris = {
         },
         
         
-    /**
-    *
-    *функция определения нажатия клавиши
-    *
-    *@var bool contact
-    *@param t
-    *
-    */
+        /**
+        *
+        *функция определения нажатия клавиши
+        *
+        *@var bool contact
+        *@param t
+        *
+        */
         touched: function() {
             var contact = false;
             Tetris.each(this.coords, function(i,j){
@@ -486,15 +486,15 @@ var Tetris = {
             return false;
         },
         
-    /**
-    *
-    *функция соединения керпичей
-    *
-    *@var int figureRow
-    *@var int figureCol
-    *@param d
-    *
-    */
+        /**
+        *
+        *функция соединения керпичей
+        *
+        *@var int figureRow
+        *@var int figureCol
+        *@param d
+        *
+        */
         joinToBricks: function() {
             Tetris.each(this.coords, function(i,j){
                 var figureRow = Tetris.figure.coords[i][j][0];
@@ -506,25 +506,25 @@ var Tetris = {
             Tetris.checkLines();
         },
         
-    /**
-    *
-    *функция определения разрушения линии
-    *
-    *@param d
-    *
-    */
+        /**
+        *
+        *функция определения разрушения линии
+        *
+        *@param d
+        *
+        */
         destroy: function() {
             this.coords = [];
             this.rotatePosition = 0;
         },
         
-    /**
-    *
-    *функция движения фигуры
-    *
-    *@param m
-    *
-    */
+        /**
+        *
+        *функция движения фигуры
+        *
+        *@param m
+        *
+        */
         makeStep: function() {
             Tetris.each(this.coords, function(i,j){
                 Tetris.figure.coords[i][j][0]++;
