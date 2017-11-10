@@ -167,9 +167,9 @@ var Tetris = {
         },
         needStepSide: false,
         rotateRollback: function() {
-                this.setRotatedCoords();
-                this.setRotatedCoords();
-                this.setRotatedCoords();
+            this.setRotatedCoords();
+            this.setRotatedCoords();
+            this.setRotatedCoords();
         },
         
         
