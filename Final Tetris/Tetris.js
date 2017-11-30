@@ -2,12 +2,12 @@
 *
 *параметры программы
 *
-*@var object Tetris
-*@var string pitchID
-*@var object brick
-*@var int background
-*@var string border
-*@var int speed
+*@var object Tetris объект с хранимыми фигурами
+*@var string pitchID ИН объекта (название)
+*@var object brick разметка для жирного шрифта
+*@var int background цвет заднего фона
+*@var string border граница
+*@var int speed скорось движения фигуры
 */
 var Tetris = {
     config: {
@@ -87,10 +87,9 @@ var Tetris = {
     
     /**
     *
-    *функция getdome
+    *функция getdome получение id элемента
     *
-    *@param geDome
-    *
+    *@param getDome id элемента
     */
     startBtn: document.getElementById('start-btn'),
     pitch: {
@@ -105,11 +104,13 @@ var Tetris = {
     
     /**
     *
-    *@param go
-    *
     */
     figure: {
         coords: [],
+        /**
+        * функция запуска новой игры
+        *
+        */
         go: function() {
             if (this.coords.length == 0) {
                 this.create();
@@ -122,7 +123,6 @@ var Tetris = {
         /**
         *
         *функция создания рандомной фигуры
-        *
         *@param create
         *
         */
@@ -135,10 +135,7 @@ var Tetris = {
         *
         *функция кручения фигуры
         *
-        *@var int rotatePosition
-        *@param create
-        *
-        *
+        *@var int rotatePosition начальная позиция фиуры на поле
         */ 
         rotate: function() {
             if (this.coords.length == 0) {
@@ -177,9 +174,7 @@ var Tetris = {
         *
         *функция определения стороны вращения
         *
-        *@var string newCoords
-        *@param setRotateCoords
-        *
+        *@var string newCoords новые координаты фигуры
         */
         setRotatedCoords: function() {
             var newCoords = [];
@@ -423,10 +418,8 @@ var Tetris = {
         *
         *функция отрисовки рандомной фигуры
         *
-        *@var object keys
-        *@var math randKey
-        *@param getRandomFigure
-        *
+        *@var object keys ключ рандомной фигуры
+        *@var math randKey рандомный ключ
         */
         getRandomFigure: function() {
             var keys = Object.keys(Tetris.config.figureTypes);
@@ -441,6 +434,9 @@ var Tetris = {
             }
             console.log(rotatePosition);
         },
+        /**
+        *Функция проверяет начало новой игры
+        */
         process: function() {
             if (this.touched()) {
                 this.joinToBricks();
@@ -458,9 +454,8 @@ var Tetris = {
         *
         *функция определения нажатия клавиши
         *
-        *@var bool contact
-        *@param t
-        *
+        *@var bool contact было ли нажатие
+        *@param return возвращает нажатие
         */
         touched: function() {
             var contact = false;
@@ -490,9 +485,8 @@ var Tetris = {
         *
         *функция соединения керпичей
         *
-        *@var int figureRow
-        *@var int figureCol
-        *@param d
+        *@var int figureRow количество строк фигуры
+        *@var int figureCol количество столбцов фигуры
         *
         */
         joinToBricks: function() {
@@ -509,9 +503,6 @@ var Tetris = {
         /**
         *
         *функция определения разрушения линии
-        *
-        *@param d
-        *
         */
         destroy: function() {
             this.coords = [];
@@ -521,8 +512,6 @@ var Tetris = {
         /**
         *
         *функция движения фигуры
-        *
-        *@param m
         *
         */
         makeStep: function() {
@@ -541,7 +530,9 @@ var Tetris = {
             }
         },
         
-        
+        /**
+        *Функция останавливает движение фигуры
+        */
         sideStepStop: function() {
             if (this.sideStepHandler != undefined || !this.sideStepHandler) {
                 this.sideStepSpeed = 0;
@@ -549,6 +540,10 @@ var Tetris = {
             }
         },
         
+        /**
+        * Функция движения фигуры
+        *@var direction знаечение стороны на сдвиг
+        */
         sideStep: function(direction) {
             Tetris.each(this.coords, function(i,j){
                 if (direction == 'right') {
@@ -586,6 +581,13 @@ var Tetris = {
                 Tetris.draw();
             }
         },
+        
+        /**
+        *Функция проверки координат
+        *@var row строка для смещение фигуры
+        *@var col столбец для смещения фигуры
+        *@param return возвращает разрешение на смешение фигуры
+        */
         checkCoords: function(row, col) {
             var checked = false;
             Tetris.each(this.coords, function(i,j){
@@ -601,7 +603,9 @@ var Tetris = {
         }
     },
     
-    
+    /**
+    *Функция инициализации поля игры
+    */
     init: function() {
         for (var i = 0; i < Tetris.pitch.height; i++) {
             Tetris.pitch.bricks[i] = [];
@@ -646,7 +650,9 @@ var Tetris = {
         }
     },
     
-    
+    /**
+    *Функция постепенного снижения фигуры через время
+    */
     tick: function() {
         console.log('tick');
         Tetris.figure.go();
@@ -671,7 +677,9 @@ var Tetris = {
         }
     },
     
-    
+    /**
+    *Функция очищает id элемента
+    */
     clearPitch: function() {
         var tetrisDom = Tetris.pitch.getDom();
         tetrisDom.innerHTML = '';
@@ -680,7 +688,9 @@ var Tetris = {
         });
     },
     
-    
+    /**
+    *Функция рисует поле
+    */
     draw: function() {
         var tetrisDom = Tetris.pitch.getDom();
         Tetris.each(Tetris.pitch.bricks, function(i,j){
@@ -703,10 +713,8 @@ var Tetris = {
     *
     *функция определения конца игры
     *
-    *
-    *@var bool gameover
-    *@param C
-    *
+    *@var bool gameover значение окончания игры
+    *@param return возвращает значение окончания игры
     */
     checkGameOver: function() {
         var gameover = false;
@@ -724,10 +732,6 @@ var Tetris = {
     /**
     *
     *функция определения границы карты
-    *
-    *@var object emptyLine
-    *@param checkLines
-    *
     */
     checkLines: function() {
         var emptyLine = [];
