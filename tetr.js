@@ -12,6 +12,10 @@ var Tetris = {
         },
         speed: 500,
         figureTypes: {
+            /**
+            *Функция возвращает фигуру палочку
+            *@return int[][] возвращает массив координат
+            */
             I: function() {
                 return [
                     [[-3,5]],
@@ -20,6 +24,10 @@ var Tetris = {
                     [[ 0,5]]
             	];
             },
+            /**
+            *Функция возвращает перевёрнутую Г в лево
+            *@return int[][] возвращает массив координат
+            */
             J: function() {
                 return [
                              [[-2,6]],
@@ -27,6 +35,10 @@ var Tetris = {
                     [[0,5],[0,6]]
             ];
             },
+            /**
+            *Функция возвращает перевернутую Г вправо
+            *@return int[][] возвращает массив координат
+            */
             L: function() {
                 return [
                     [[-2,5]],
@@ -34,24 +46,40 @@ var Tetris = {
                     [[0,5],[0,6]]
             ];
             },
+            /**
+            *Функция возвращает квадрат
+            *@return int[][] возвращает массив координат
+            */
             O: function() {
                 return [
                 [[-1,5],[-1,6]],
                 [[ 0,5], [0,6]]
             ];
             },
+            /**
+            *Функция возвращает Z образную фигуру в лево
+            *@return int[][] возвращает массив координат
+            */
             S: function() {
                 return [
                             [[-1,6],[-1,7]],
                 [[0,5], [0,6]]
             ];
             },
+            /**
+            *Функция возвращает Т образную фигуру
+            *@return int[][] возвращает массив координат
+            */
             T: function() {
                 return [
                 [[-1,5],[-1,6],[-1,7]],
                              [[0,6]]
             ];
             },
+            /**
+            *Функция возвращает Z образную фигуру вправо
+            *@return int[][] возвращает массив координат
+            */
             Z: function() {
                 return [
                         [[-1,4],[-1,5]],
@@ -65,12 +93,20 @@ var Tetris = {
         width: 12,
         height: 20
         bricks: []
+    
+        /**
+            *Функция возвращает имя элемента
+            *@return string возвращает имя элемента
+        */
         getDom: function() {
             return document.getElementById(Tetris.config.pitchID);
         }
     },
     figure: {
         coords: [],
+        /**
+        *Функция начала игрового процесса, если он ещё не начат
+        */
         go: function() {
         if (this.coords.length == 0) {
             this.create();
@@ -78,10 +114,18 @@ var Tetris = {
             this.process();
         }
     },
+        /**
+        *Функция создания фигуры на поле
+        */
         create: function() {
              this.coords = this.getRandomFigure();
-    },    
+    },  
         rotatePosition: 0,
+        
+        /**
+        *Функция поворота фигуры
+        *@return boolean выполнение поворота
+        */
         rotate: function() {
             if (this.coords.length == 0) {
                 return false;
@@ -108,11 +152,18 @@ var Tetris = {
             Tetris.draw();
         },
         needStepSide: false,
+        
+        /**
+        *Функция поворота в обратном направлении
+        */
         rotateRollback: function() {
             	this.setRotatedCoords();
                 this.setRotatedCoords();
                 this.setRotatedCoords();
         },
+        /**
+        *Функция изменения координат фигуры при её повороте
+        */
         setRotatedCoords: function() {
             var newCoords = [];
             switch(this.type) {
@@ -349,11 +400,18 @@ var Tetris = {
                     break;
             }
         },
+        /**
+        *Функция возвращает рандомную фигуру
+        *@return int[][] возвращает координаты фигуры
+        */
         getRandomFigure: function() {
         var keys = Object.keys(Tetris.config.figureTypes);
         var randKey = Math.floor(Math.random() * keys.length);
         return Tetris.config.figureTypes[keys[randKey]];
     },
+        /**
+        *Функция поведения фигуры в разных ситуациях
+        */
         process: function() {
         // Если фигура соприкоснулась со стенкой или кирпичиком
         if (this.touched()) {
@@ -369,7 +427,12 @@ var Tetris = {
             this.makeStep();
         }
     },
-     touched: function() {
+    /**
+    *Функция действия фигуры при соприкосновении
+    *@return boolean возвращает значение соприкосновении, 
+    *true, если было соприкосновение иначе false
+    */
+    touched: function() {
         // Если следующей после фигуры строки в массиве кирпичиков не существует,
         // значит мы достигли нижнего края поля. Поэтому возвращаем true - соприкосновение есть
         if (Tetris.pitch.bricks[this.coords[0] + 1] == undefined) {
@@ -383,6 +446,9 @@ var Tetris = {
         // Если ни одно из условий не выполнено - значит, соприкосновения нет
         return false;
     },
+    /**
+    *Функция соединения керпичиков
+    */
     joinToBricks: function() {
     Tetris.each(this.coords, function(i,j){
                 var figureRow = Tetris.figure.coords[i][j][0];
@@ -395,10 +461,16 @@ var Tetris = {
             // Здесь и будем проверять линии
             Tetris.checkLines();
         },
+    /**
+    *Функция уничтожении заполненой линии на поле
+    */
     destroy: function() {
         // Чтобы освободить место для следующей фигуры, просто чистим координаты
         this.coords = [];
     },
+    /**
+    *Функция производит шаг фигуры на поле
+    */
     makeStep: function() {
         Tetris.each(this.coords, function(i,j){
             Tetris.figure.coords[i][j][0]++;
@@ -406,6 +478,9 @@ var Tetris = {
  },
      rollback: false,// пока ничего не случилось, откатывать ничего не надо
      sideStepSpeed: 0,
+     /**
+     *Функция производит шаг фигуры в сторону
+     */
      sideStep: function(direction) {
             if (!this.sideStepSpeed) {
                 this.sideStepSpeed = 50;
@@ -414,12 +489,18 @@ var Tetris = {
                 }, this.sideStepSpeed);
             }
         },
+        /**
+        *Функция производит остановку движения фигуры в сторону
+        */
         sideStepStop: function() {
             if (this.sideStepHandler != undefined || !this.sideStepHandler) {
                 this.sideStepSpeed = 0;
                 clearInterval(this.sideStepHandler);
             }
         },
+        /**
+        *Функция производит движение фигуры в стороны
+        */
         sideStep: function(direction) {
             Tetris.each(this.coords, function(i,j){
                 if (direction == 'right') {
@@ -457,6 +538,11 @@ var Tetris = {
                 Tetris.draw();
             }
         },
+        
+        /**
+        *Функция проверки координат на пустоту
+        *@return boolean возвращает значение клетки на пустоту
+        */
         checkCoords: function(row, col) {
             var checked = false;
             Tetris.each(this.coords, function(i,j){
@@ -471,6 +557,9 @@ var Tetris = {
             return checked;
         }
     },
+    /**
+    *Функция инициализаци игрового поля
+    */
     init: function() {
         for (var i = 0; i < Tetris.pitch.height; i++) {
             Tetris.pitch.bricks[i] = [];
@@ -513,6 +602,10 @@ var Tetris = {
             }
         }
     },
+        
+    /**
+    *Функция изменения скорости фигуры с выводом в консоли
+    */
     tick: function() {
         console.log('tick');
         Tetris.figure.go();
@@ -522,6 +615,9 @@ var Tetris = {
         }
     },
     currentSpeed: 0,
+    /**
+    *Функция изменения скорости фигуры
+    */
     setSpeed: function(speed) {
         if (!speed) var speed = Tetris.config.speed;
         if (speed != this.currentSpeed) {
@@ -534,6 +630,9 @@ var Tetris = {
             this.currentSpeed = speed;
         }
     },
+    /**
+    *Функция очистки шага после фигуры
+    */
     clearPitch: function() {
         var tetrisDom = Tetris.pitch.getDom();
         // Очищаем поле
@@ -543,6 +642,10 @@ var Tetris = {
              tetrisDom.innerHTML += Tetris.config.brick;
         });
     },
+        
+    /**
+    *Функция для рисования поля
+    */
     draw: function() {
         var tetrisDom = Tetris.pitch.getDom();
         Tetris.each(Tetris.pitch.bricks, function(i,j){
@@ -563,6 +666,11 @@ var Tetris = {
             }
         });
     },
+    
+    /**
+    *Функция проверки игры на окончание
+    *@return boolean возвращает значение окончания игры
+    */
     checkGameOver: function() {
         var gameover = false;
         Tetris.each(Tetris.figure.coords, function(i,j){
@@ -575,6 +683,10 @@ var Tetris = {
         });
         return gameover;
     },
+    
+    /**
+    *Функция проверки линии на заполненность
+    */
     checkLines: function() {
         // Построим пустую линию (вдруг пригодится)
         var emptyLine = [];
@@ -599,6 +711,10 @@ var Tetris = {
             }
         }
     },
+        
+    /**
+    *Функция замены координат
+    */
     each: function(coords, callback) {
         for (var i = 0; i < coords.length; i++) {
             for (var j = 0; j < coords[i].length; j++) {
