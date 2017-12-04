@@ -1,3 +1,6 @@
+/**
+*@var object Объект который хранить данные фигур и стили
+*/
 var Tetris = {
     config: {
         pitchID: "tetris",
