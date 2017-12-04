@@ -92,6 +92,9 @@ var Tetris = {
         }
 },
     startBtn: document.getElementById('start-btn')
+    /**
+    *@param pitch параметры кнопки
+    */
     pitch: {
         width: 12,
         height: 20
