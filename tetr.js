@@ -1,5 +1,11 @@
 /**
+*параметры программы
 *@var object Объект который хранить данные фигур и стили
+*@var string pitchID ИН объекта (название)
+*@var object brick разметка для жирного шрифта
+*@var int background цвет заднего фона
+*@var string border граница
+*@var int speed скорось движения фигуры
 */
 var Tetris = {
     config: {
