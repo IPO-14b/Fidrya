@@ -1,29 +1,41 @@
 /**
 *параметры программы
 *Tetris Объект который хранить данные фигур и стили
-*@var object config Конфигурация тетриса 
-*<ul>
-*    <li>@var string pitchID ИН объекта (название)</li>
-*    <li>@var string brick разметка для жирного шрифта</li>
-*    <li>@var object freeBrick цвет и граница свободного кирпичика</li>
-*    <li>@var object filledBrick цвет и граница занятого кирпичика</li>
-*    <li>@var int speed скорось движения фигуры</li>
-*    <li>@var object figureTypes тип фигуры</li>
-*</ul>
 */
 var Tetris = {
+    /**
+    *@var object config Конфигурация тетриса 
+    */
     config: {
+        /**
+        *@var string pitchID ИН объекта (название)
+        */
         pitchID: "tetris",
+        /**
+        *@var string brick разметка для жирного шрифта
+        */
         brick: "<b></b>",
+        /**
+        *@var object freeBrick цвет и граница свободного кирпичика
+        */
         freeBrick: {
             background: "#000",
             border: "1px solid #333"
         },
+        /**
+        *@var object filledBrick цвет и граница занятого кирпичика
+        */
         filledBrick: {
             background: "#fff",
             border: "1px solid #999"
         },
+        /**
+        *@var int speed скорось движения фигуры
+        */
         speed: 500,
+        /**
+        *@var object figureTypes тип фигуры
+        */
         figureTypes: {
             /**
             *Функция возвращает фигуру палочку
