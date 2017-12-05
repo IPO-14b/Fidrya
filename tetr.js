@@ -1,11 +1,15 @@
 /**
 *параметры программы
-*@var object Объект который хранить данные фигур и стили
-*@var string pitchID ИН объекта (название)
-*@var object brick разметка для жирного шрифта
-*@var int background цвет заднего фона
-*@var string border граница
-*@var int speed скорось движения фигуры
+*Tetris Объект который хранить данные фигур и стили
+*@var object config Конфигурация тетриса 
+*<ul>
+*    <li>@var string pitchID ИН объекта (название)</li>
+*    <li>@var string brick разметка для жирного шрифта</li>
+*    <li>@var object freeBrick цвет и граница свободного кирпичика</li>
+*    <li>@var object filledBrick цвет и граница занятого кирпичика</li>
+*    <li>@var int speed скорось движения фигуры</li>
+*    <li>@var object figureTypes тип фигуры</li>
+*</ul>
 */
 var Tetris = {
     config: {
@@ -99,7 +103,7 @@ var Tetris = {
 },
     startBtn: document.getElementById('start-btn')
     /**
-    *@param pitch параметры кнопки
+    *pitch параметры кнопки
     */
     pitch: {
         width: 12,
@@ -114,24 +118,27 @@ var Tetris = {
             return document.getElementById(Tetris.config.pitchID);
         }
     },
+    /**
+    *figure начальный блок
+    */
     figure: {
         coords: [],
         /**
         *Функция начала игрового процесса, если он ещё не начат
         */
         go: function() {
-        if (this.coords.length == 0) {
-            this.create();
-        } else {
-            this.process();
-        }
-    },
+            if (this.coords.length == 0) {
+                this.create();
+            } else {
+                this.process();
+            }
+        },
         /**
         *Функция создания фигуры на поле
         */
         create: function() {
              this.coords = this.getRandomFigure();
-    },  
+        },  
         rotatePosition: 0,
         
         /**
@@ -469,8 +476,8 @@ var Tetris = {
                     Tetris.pitch.bricks[figureRow][figureCol] = 1;
                 }
         });
-            // Вот в этом месте фигура уже упала и была объединена с массивом кирпичиков
-            // Здесь и будем проверять линии
+        // Вот в этом месте фигура уже упала и была объединена с массивом кирпичиков
+        // Здесь и будем проверять линии
         Tetris.checkLines();
         },
     /**
@@ -481,13 +488,13 @@ var Tetris = {
         this.coords = [];
     },
     /**
-    *Функция производит шаг фигуры на поле
-    */
-    makeStep: function() {
-        Tetris.each(this.coords, function(i,j){
-            Tetris.figure.coords[i][j][0]++;
-        });
- },
+     *Функция производит шаг фигуры на поле
+     */
+     makeStep: function() {
+         Tetris.each(this.coords, function(i,j){
+             Tetris.figure.coords[i][j][0]++;
+         });
+     },
      rollback: false,// пока ничего не случилось, откатывать ничего не надо
      sideStepSpeed: 0,
      /**
@@ -584,6 +591,9 @@ var Tetris = {
             Tetris.clearPitch();
             Tetris.tick();
         }
+        /**
+        *Функция обработчик нажатия клавиши
+        */
         window.onkeydown = function (event) {
             var direction = '';
             if (event.keyCode == 39) {
@@ -600,6 +610,9 @@ var Tetris = {
                 Tetris.figure.rotate();
             }
         }
+        /**
+        *Функция обработчик отжатия клавиши
+        */
         window.onkeyup = function (event) {
             var direction = '';
             if (event.keyCode == 39) {
